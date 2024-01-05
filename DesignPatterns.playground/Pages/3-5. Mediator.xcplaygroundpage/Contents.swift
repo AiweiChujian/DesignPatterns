@@ -1,4 +1,5 @@
 //: [Previous](@previous)
+// 用一个中介对象来封装一系列的对象交互. 中介者使各对象不需要显式的相互引用, 从而使其耦合松散, 而且可以独立地改变它们之间的交互
 
 /// Mediator
 protocol ProgramMediator: AnyObject {
@@ -42,7 +43,7 @@ final class Designer {
     }
     
     func start(_ task: String) {
-        print("完成\"\(task)\"的 UI 设计")
+        print("1. 完成\"\(task)\"的 UI 设计")
     }
     
     func take(task: String) {
@@ -60,7 +61,7 @@ final class Developer {
     }
     
     func start(_ task: String) {
-        print("完成\"\(task)\"的程序开发")
+        print("2. 完成\"\(task)\"的程序开发")
     }
     
     func take(task: String) {
