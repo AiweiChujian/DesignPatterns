@@ -49,21 +49,72 @@ extension SubjectType {
     }
     
     func deattach<O: ObserverType>(_ observer: O) where O.T == T {
-        observerList.list = observerList.list.filter{
+        observerList.list = observerList.list.filter {
             $0.observer !== observer
         }
     }
 }
 
-
-/// Subject
-
 /// ConcreteSubject
-<#具体的目标, 在状态发生改变时, 通知各个观察者#>
+final class Noticeboard: SubjectType {
+    var content: String = "" {
+        didSet { notify() }
+    }
+    
+    typealias T = String
+    
+    var observerList: ObserverList = .instance()
+    
+    var currentState: String {
+        content
+    }
+}
+
 
 /// ConcreteObserver
-<#具体的观察者, 实现更新接口, 使自身状态与目标状态保持一致#>
+final class Teacher: ObserverType {
+    let name: String
+    
+    init(_ name: String) {
+        self.name = name
+    }
+    
+    typealias T = String
+    
+    func subjectDidUpdate<T>(_ state: T) {
+        print("教师\(name)收到通知:\(state)")
+    }
+}
 
+final class Student: ObserverType {
+    let name: String
+    
+    init(_ name: String) {
+        self.name = name
+    }
+    
+    typealias T = String
+    
+    func subjectDidUpdate<T>(_ state: T) {
+        print("学生\(name)收到通知:\(state)")
+    }
+}
+
+
+/// Use case
+let noticeboard = Noticeboard()
+
+let teacher = Teacher("老李")
+noticeboard.attach(teacher)
+
+let student = Student("小明")
+noticeboard.attach(student)
+
+
+noticeboard.content = "这周五放假"
+
+noticeboard.deattach(teacher)
+noticeboard.content = "下周一也放假"
 
 //: [Next](@next)
 
