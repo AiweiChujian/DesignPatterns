@@ -30,6 +30,7 @@ final class Controller {
     
     func request() {
         do {
+            // NSLocalizedDescriptionKey, NSUnderlyingErrorKey
             throw NSError(domain: "com.dp.test", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求出错!"])
         } catch {
             errorHandler.handle(error: error)
